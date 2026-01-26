@@ -26,10 +26,10 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
         <div className="relative aspect-[2/3] overflow-hidden bg-gray-200">
           <SafeImage 
-            src={TMDB_API.imageUrl(movie.poster_path)} 
+            src={TMDB_API.imageUrl(movie.poster_path)}
             alt={movie.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+            fallbackSrc={'/images/placeholder/no-poster.svg'}/>
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
           <button 
