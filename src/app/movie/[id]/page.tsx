@@ -1,5 +1,6 @@
 import { TMDB_API } from "@/services/tmdb";
 import Image from "next/image";
+import Link from 'next/link';
 import SafeImage from "@/components/SafeImage";
 
 interface ReleaseDate {
@@ -30,6 +31,12 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <h1 className="text-2xl font-bold text-white-400">Movie not found</h1>
         <p className="text-gray-500">The movie you are looking for doesn't exist or was removed.</p>
+        <Link 
+          href="/" 
+          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Back to Home
+        </Link>
       </div>
     )
   }
