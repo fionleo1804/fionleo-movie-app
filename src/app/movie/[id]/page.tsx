@@ -83,7 +83,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
         month: 'short', 
         year: 'numeric',
       })
-    : 'To be announce';
+    : 'To be announced';
 
   return (
     <div className="max-w-4xl mx-auto p-6">      
