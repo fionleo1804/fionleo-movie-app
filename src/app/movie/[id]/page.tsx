@@ -2,9 +2,14 @@ import { TMDB_API } from "@/services/tmdb";
 import Image from "next/image";
 import SafeImage from "@/components/SafeImage";
 
+interface ReleaseDate {
+  certification: string;
+  type?: number;
+}
+
 interface ReleaseDateResult {
   iso_3166_1: string;
-  release_dates: { certification: string }[];
+  release_dates: ReleaseDate[];
 }
 
 interface Genre {
@@ -21,18 +26,41 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
   );
   
   if (!res.ok) {
-    return <div className="p-10 text-center">Movie not found</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+        <h1 className="text-2xl font-bold text-white-400">Movie not found</h1>
+        <p className="text-gray-500">The movie you are looking for doesn't exist or was removed.</p>
+      </div>
+    )
   }
   const movie = await res.json();
 
   const hasDifferentTitle = movie.original_title && movie.original_title !== movie.title;
 
-  const certification = movie.release_dates?.results
-    ?.find((r: ReleaseDateResult) => r.iso_3166_1 === "US")
-    ?.release_dates?.[0]?.certification || "Not Rated";
+  const getGlobalCertification = () => {
+    const results: ReleaseDateResult[] = movie.release_dates?.results || [];
+    const myEntry = results.find((r) => r.iso_3166_1 === "MY");
+    const myCert = myEntry?.release_dates.find(d => d.certification !== "")?.certification;
+    if (myCert) {
+      return myCert;
+    }
+
+    const usEntry = results.find((r) => r.iso_3166_1 === "US");
+    const usCert = usEntry?.release_dates.find(d => d.certification !== "")?.certification;
+    if (usCert) {
+      return usCert;
+    }
+
+    const fallback = results.find(r => r.release_dates.some(d => d.certification !== ""));
+    return fallback?.release_dates.find(d => d.certification !== "")?.certification || "NR";
+  };
+  const certification  = getGlobalCertification();
+  const certStyles     = getCertificationStyles(certification);
 
   const formatLanguageCode = (code: string) => {
-    if (!code) return "Unknown";
+    if (!code) {
+      return "Unknown";
+    }
 
     try {
       const displayNames = new Intl.DisplayNames(['en'], { type: 'language' });
@@ -56,6 +84,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
         <SafeImage 
           src={TMDB_API.imageUrl(movie.backdrop_path || movie.poster_path)} 
           alt={movie.title}
+          fallbackSrc={'/images/placeholder/no-poster.svg'}
           className="w-full h-full object-cover"
         />
       </div>
@@ -134,12 +163,14 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
             <p className="font-bold text-white-800">{formatLanguageCode(movie.original_language)}</p>
           </div>
 
-          <div className="flex flex-col items-center text-center border-l border-gray-100">
-            <div className="w-6 h-6 mb-2 flex items-center justify-center">
-               <span className="text-[10px] font-black border-2 border-gray-500 px-1 rounded-sm">18+</span>
+          <div className="flex flex-col items-center text-center border-l border-white-800">
+            <div className="h-6 mb-2 flex items-center justify-center">
+              <span className="text-[9px] font-black border border-white-500 px-1.5 py-0.5 rounded text-white">
+                {certification.includes('(') ? 'INTL' : 'LOCAL'}
+              </span>
             </div>
-            <p className="text-[10px] text-white-400 uppercase tracking-widest mb-1">Age Rating</p>
-            <p className="font-bold text-white-800">{certification}</p>
+            <p className="text-[10px] text-white uppercase tracking-widest mb-1">Age Rating</p>
+            <p className={`font-bold text-white text-base md:text-lg ${certStyles}`}>{certification}</p>
           </div>
         </div>
 
@@ -162,3 +193,21 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
     </div>
   );
 }
+
+const getCertificationStyles = (cert: string) => {
+  const c = cert.toUpperCase();
+  
+  if (c.includes('18')) {
+    return 'border-red-500 text-red-500 bg-red-500/10';
+  }
+  
+  if (c.includes('13') || c.includes('16') || c === 'R' || c === 'PG-13') {
+    return 'border-yellow-500 text-yellow-500 bg-yellow-500/10';
+  }
+  
+  if (c === 'U' || c === 'P' || c === 'G' || c === 'PG') {
+    return 'border-green-500 text-green-500 bg-green-500/10';
+  }
+  
+  return 'border-gray-500 text-gray-400 bg-gray-500/10';
+};
