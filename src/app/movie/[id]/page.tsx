@@ -2,6 +2,7 @@ import { TMDB_API } from "@/services/tmdb";
 import Image from "next/image";
 import Link from 'next/link';
 import SafeImage from "@/components/SafeImage";
+import { Movie } from "@/types/movie";
 
 interface ReleaseDate {
   certification: string;
@@ -20,11 +21,18 @@ interface Genre {
 
 export default async function MovieDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000);
   
   const res = await fetch(
-    `${TMDB_API.fetchDetails(id)}&append_to_response=release_dates`, 
-    { next: { revalidate: 3600 } }
-  );
+      `${TMDB_API.fetchDetails(id)}&append_to_response=release_dates`, 
+      { 
+        next: { revalidate: 3600 },
+        signal: controller.signal 
+      }
+    );
+  clearTimeout(timeoutId);
   
   if (!res.ok) {
     return (
@@ -40,7 +48,22 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
       </div>
     )
   }
-  const movie = await res.json();
+  const rawMovie = await res.json();
+  const movie: Movie & { release_dates: { results: ReleaseDateResult[] } } = {
+      id: rawMovie.id,
+      title: rawMovie.title,
+      original_title: rawMovie.original_title,
+      poster_path: rawMovie.poster_path,
+      backdrop_path: rawMovie.backdrop_path,
+      release_date: rawMovie.release_date,
+      vote_average: rawMovie.vote_average,
+      popularity: rawMovie.popularity,
+      overview: rawMovie.overview,
+      genres: rawMovie.genres,
+      original_language: rawMovie.original_language,
+      runtime: rawMovie.runtime,
+      release_dates: rawMovie.release_dates // Kept for the Waterfall logic
+    };
 
   const hasDifferentTitle = movie.original_title && movie.original_title !== movie.title;
 
