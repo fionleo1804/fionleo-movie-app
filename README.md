@@ -3,6 +3,8 @@
 A list of movies database built using Next.js and TypeScript.
 
 View Wiki [https://github.com/fionleo1804/fionleo-movie-app/wiki]
+View Desktop Result: [https://github.com/fionleo1804/fionleo-movie-app/blob/main/output/desktop.mp4]
+View Mobile Result: [https://github.com/fionleo1804/fionleo-movie-app/blob/main/output/mobile.mp4]
 
 🚀 Features
 
