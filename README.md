@@ -40,18 +40,4 @@ npm install
 npm run dev
 
 5. Running Tests
-# Run all tests
 npm test
-
-📁 Project Structure
-
-├── app/
-│   ├── movie/[id]/page.tsx   # Detail Screen
-│   ├── page.tsx              # Home Screen
-│   └── layout.tsx            # Global Layout & Providers
-├── components/               # Reusable UI
-├── src/
-│   ├── __tests__/            # Unit & Integration Tests
-│   └── services/             # TMDB API Service
-├── jest.config.js            # Jest Configuration
-└── jest.setup.js             # Testing Environment Setup
