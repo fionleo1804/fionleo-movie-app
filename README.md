@@ -1,6 +1,7 @@
 **An assessment using React**
 
 A list of movies database built using Next.js and TypeScript.
+
 View Wiki [https://github.com/fionleo1804/fionleo-movie-app/wiki]
 
 🚀 Features
