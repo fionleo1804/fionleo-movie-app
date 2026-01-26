@@ -31,13 +31,17 @@ Detail Screen
     - npm or yarn
 
 2. Environment Variables
+
 Create a .env.local file in the root directory. Refer to .env.example
 
 3. Installation
+
 npm install
 
 4. Development Server
+
 npm run dev
 
 5. Running Tests
+
 npm test
