@@ -63,4 +63,9 @@ To build and test the PWA locally:
 
 
 **Wiki**
-For detailed logic, API documentation, and architecture, please visit the Wiki.
+For detailed logic, API documentation, and architecture, please visit the Wiki:
+[https://github.com/fionleo1804/fionleo-movie-app/wiki]
+
+**Outputs**
+- Desktop: [https://github.com/fionleo1804/fionleo-movie-app/blob/main/output/desktop.mp4]
+- Mobile: [https://github.com/fionleo1804/fionleo-movie-app/blob/main/output/mobile.mp4]
