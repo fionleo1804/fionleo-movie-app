@@ -1,0 +1,5 @@
+<svg width="50" height="50" viewBox="0 0 6.25 6.25" xmlns="http://www.w3.org/2000/svg">
+  <path style="fill:#9e9e9e;stroke:none" d="M2.625.625h6.75a.75.75 0 0 1 .75.75v9.25a.75.75 0 0 1-.75.75h-6.75a.75.75 0 0 1-.75-.75v-9.25a.75.75 0 0 1 .75-.75" transform="scale(.521)"/>
+  <path style="fill:#263238;stroke:none" d="M6 9.75a3.5 3.5 0 1 1 .001 0z" transform="scale(.521)"/>
+  <path style="fill:#4caf50;stroke:none" d="M5 2h2v3h1L6 7 4 5h1z" transform="scale(.521)"/>
+</svg>

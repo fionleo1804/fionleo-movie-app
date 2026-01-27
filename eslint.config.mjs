@@ -12,7 +12,17 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/sw.js",
+    "public/workbox-*.js",
+    "public/fallback-*.js",
+    "public/images/pwa/**"
   ]),
+  {
+    rules: {
+      "@next/next/no-img-element": "warn", 
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+    }
+  }
 ]);
 
 export default eslintConfig;

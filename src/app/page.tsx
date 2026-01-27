@@ -31,7 +31,7 @@ export default function HomePage() {
       setMovies(prev => (isRefresh ? newResults : [...prev, ...newResults]));
       setPage(pageNum);
       setHasMore(pageNum < (data?.total_pages || 0));
-    } catch (_e) {
+    } catch {
       // console.error("Fetch Error:", _e); 
     } finally {
       setLoading(false);

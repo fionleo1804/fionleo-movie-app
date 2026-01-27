@@ -9,8 +9,11 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-const originalError = console.error;
-console.error = (...args) => {
-  if (args[0].includes('Warning: ReactDOM.render is no longer supported')) return;
-  originalError(...args);
-};
+// const originalError = console.error;
+// console.error = (...args) => {
+//   if (args[0].includes('Warning: ReactDOM.render is no longer supported')) {
+//     return;
+//   }
+
+//   originalError(...args);
+// };

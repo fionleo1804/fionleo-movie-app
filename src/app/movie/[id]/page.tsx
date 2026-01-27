@@ -2,22 +2,7 @@ import { TMDB_API } from "@/services/tmdb";
 import Image from "next/image";
 import Link from 'next/link';
 import SafeImage from "@/components/SafeImage";
-import { Movie } from "@/types/movie";
-
-interface ReleaseDate {
-  certification: string;
-  type?: number;
-}
-
-interface ReleaseDateResult {
-  iso_3166_1: string;
-  release_dates: ReleaseDate[];
-}
-
-interface Genre {
-  id: number;
-  name: string;
-}
+import { Genre, Movie, ReleaseDateResult } from "@/types/movie";
 
 export default async function MovieDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -38,7 +23,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <h1 className="text-2xl font-bold text-white-400">Movie not found</h1>
-        <p className="text-gray-500">The movie you are looking for doesn't exist or was removed.</p>
+        <p className="text-gray-500">The movie you are looking for doesn&apos;t exist or was removed.</p>
         <Link 
           href="/" 
           className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -95,7 +80,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
     try {
       const displayNames = new Intl.DisplayNames(['en'], { type: 'language' });
       return displayNames.of(code) || code.toUpperCase();
-    } catch (_e) {
+    } catch {
       return code.toUpperCase();
     }
   };
@@ -141,7 +126,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
             <div className="flex items-center gap-4">
               <span>•</span>
               <div className="flex gap-2">
-                {movie.genres.slice(0, 3).map((g: any) => (
+                {movie.genres.slice(0, 3).map((g: Genre) => (
                   <span
                     key={g.id}
                     className="bg-gray-100 px-2 py-0.5 rounded text-xs uppercase text-black tracking-wider"

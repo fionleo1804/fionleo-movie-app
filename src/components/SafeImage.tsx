@@ -1,20 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import Image, { ImageProps } from "next/image";
 
-interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface SafeImageProps extends Omit<ImageProps, 'src'> {
+  src: string | null | undefined;
   fallbackSrc: string;
 }
 
-export default function SafeImage({ src, fallbackSrc, alt, ...props }: SafeImageProps) {
-  const [imgSrc, setImgSrc] = useState(src);
+const SafeImage = ({ src, alt, fallbackSrc, className, ...props }: SafeImageProps) => {
+  const [errorSrc, setErrorSrc] = useState<string | null>(null);
+
+  const [prevSrc, setPrevSrc] = useState(src);
+  if (src !== prevSrc) {
+    setPrevSrc(src);
+    setErrorSrc(null);
+  }
+
+  const displaySrc = errorSrc ? fallbackSrc : (src || fallbackSrc);
 
   return (
-    <img
+    <Image
       {...props}
-      src={imgSrc}
-      alt={alt}
-      onError={() => setImgSrc(fallbackSrc)}
+      src={displaySrc}
+      alt={alt || "Movie poster"}
+      className={className}
+      onError={() => setErrorSrc(fallbackSrc)}
+      unoptimized={src?.includes('tmdb.org')} 
     />
   );
-}
+};
+
+export default SafeImage;
