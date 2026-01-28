@@ -1,6 +1,6 @@
 "use client";
 
-import { TMDB_API } from '@/services/tmdb';
+import { TMDB_API } from '@/api/tmdb';
 import { Movie } from '@/types/movie';
 import Image from "next/image";
 import Link from 'next/link';
