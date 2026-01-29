@@ -5,7 +5,8 @@ A high-performance movie database built with Next.js 16, TypeScript, and PWA cap
 🚀 Features
 - Dynamic Experience: Infinite scroll, pull-to-refresh, and advanced sorting.
 - Full PWA Support: Installable on mobile/desktop with offline data persistence via Workbox.
-- Push Notifications: Integrated Web Push API for real-time movie alerts.
+- Push Notifications: Real-time alerts via Web Push API.
+    - Manual Trigger: DevTools > Application > Service Workers > Push.
 - Responsive Design: Optimized for both Desktop and Mobile views.
 
 🛠️ Tech Stack
