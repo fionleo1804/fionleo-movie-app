@@ -14,7 +14,7 @@ A high-performance movie database built with Next.js 16, TypeScript, and PWA cap
 - Language: TypeScript / Javascript
 - Styling: Tailwind CSS
 - PWA Engine: @ducanh2912/next-pwa (Workbox)
-- State & Logic: React Hooks (useState, useEffect, useMemo)
+- State & Logic: React Hooks (useState, useEffect)
 - Testing: Jest & React Testing Library
 - Library: react-infinite-scroll-component
 
