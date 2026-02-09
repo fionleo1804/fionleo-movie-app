@@ -13,6 +13,13 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
+jest.mock("@/api/tmdb", () => ({
+  TMDB_API: {
+    fetchDetails: (id: string) => `https://api.themoviedb.org/3/movie/${id}`,
+    imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-image.svg",
+  },
+}));
+
 const mockedFetch = jest.fn() as jest.MockedFunction<typeof window.fetch>;
 global.fetch = mockedFetch;
 
@@ -23,8 +30,8 @@ const mockDetailData = {
   id: 1,
   title: "",
   original_title: "biarkan aku ganti",
-  poster_path: "https://image.tmdb.org/t/p/w500/hubIvG6AEtvU0vQyHmH86rVvPoM.jpg",
-  backdrop_path: "/images/placeholder/no-image.svg",
+  poster_path: "hubIvG6AEtvU0vQyHmH86rVvPoM.jpg",
+  backdrop_path: "hubIvG6AEtvU0vQyHmH86rVvPoM.jpg",
   release_date: "2026-01-26",
   vote_average: 0.0,
   popularity: 0,

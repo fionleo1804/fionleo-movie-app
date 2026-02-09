@@ -4,6 +4,7 @@ import "./globals.css";
 import OfflineBanner from "@/components/OfflineBanner";
 import InstallPWA from "@/components/InstallPWA";
 import PushToggle from "@/components/PushToggle";
+import { MovieProvider } from "@/context/MovieContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,10 +50,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning> 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <OfflineBanner/>
-        <InstallPWA/>
-        <PushToggle/>
-        {children}
+        <MovieProvider>
+          <OfflineBanner/>
+          <InstallPWA/>
+          <PushToggle/>
+          {children}
+        </MovieProvider>
       </body>
     </html>
   );

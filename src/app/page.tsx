@@ -5,11 +5,12 @@ import { TMDB_API } from "@/api/tmdb";
 import { Movie } from "@/types/movie";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MovieCard from "@/components/MovieCard";
+import { useMovieContext } from "@/context/MovieContext";
 
 export default function HomePage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState("release_date.desc");
+  const { sortBy, setSortBy } = useMovieContext();
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);

@@ -2,6 +2,7 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import { jest, describe, it, expect, beforeEach, afterEach } from "@jest/globals";
 import HomePage from "../app/page";
 import { Movie, MovieResponse } from "@/types/movie";
+import { MovieProvider } from "@/context/MovieContext";
 
 const mockMoviesResponse: MovieResponse = {
   results: [
@@ -41,10 +42,10 @@ const mockFetchMoviesFn = jest.fn(() =>
   Promise.resolve(mockMoviesResponse)
 );
 
-jest.mock("@/services/tmdb", () => ({
+jest.mock("@/api/tmdb", () => ({
   TMDB_API: {
     fetchMovies: (_page: number, _sortBy: string) => mockFetchMoviesFn(),
-    imageUrl: (path: string) => path || "/images/placeholder/no-poster.svg",
+    imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-poster.svg",
   },
 }));
 
@@ -63,7 +64,11 @@ describe("HomePage", () => {
   });
 
   it("renders movies from API", async () => {
-    render(<HomePage />);
+    render(
+      <MovieProvider>
+        <HomePage />
+      </MovieProvider>
+    );
 
     for (const movie of mockMoviesResponse.results) {
       expect(await screen.findByText(movie.title)).toBeInTheDocument();
@@ -71,7 +76,11 @@ describe("HomePage", () => {
   });
 
   it("calls fetch with correct URL when sort changes", async () => {
-    render(<HomePage />);
+    render(
+      <MovieProvider>
+        <HomePage />
+      </MovieProvider>
+    );
 
     const dropdown = screen.getByLabelText(/sort by/i);
 
@@ -86,7 +95,11 @@ describe("HomePage", () => {
   });
 
   it("renders loader during initial fetch", async () => {
-    render(<HomePage />);
+    render(
+      <MovieProvider>
+        <HomePage />
+      </MovieProvider>
+    );
 
     const skeletons = screen.getAllByTestId("movie-skeleton");
     expect(skeletons.length).toBeGreaterThan(0);

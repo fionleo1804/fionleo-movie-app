@@ -9,6 +9,13 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ src, alt, className, ...props }) => 
+    // eslint-disable-next-line jsx-a11y/alt-text
+    <img src={src} alt={alt} className={className} {...props} />,
+}));
+
 // const originalError = console.error;
 // console.error = (...args) => {
 //   if (args[0].includes('Warning: ReactDOM.render is no longer supported')) {

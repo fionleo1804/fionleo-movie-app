@@ -1,6 +1,6 @@
-const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
-const IMAGE_BASE = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE;
+const API_KEY = process.env.TMDB_API_KEY;
+const BASE_URL = process.env.TMDB_BASE_URL;
+const IMAGE_BASE = process.env.TMDB_IMAGE_BASE;
 
 export const TMDB_API = {
   API_KEY,

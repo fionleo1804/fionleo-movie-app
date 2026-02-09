@@ -38,7 +38,7 @@ export default function PushToggle() {
         return alert("Notifications are blocked in your browser settings.");
       }
 
-      const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+      const vapidKey = process.env.VAPID_PUBLIC_KEY;
       if (!vapidKey) {
         return;
       }
