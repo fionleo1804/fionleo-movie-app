@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { TMDB_API } from "@/api/tmdb";
 import { Movie } from "@/types/movie";
 import InfiniteScroll from "react-infinite-scroll-component";
 import MovieCard from "@/components/MovieCard";
@@ -21,7 +20,7 @@ export default function HomePage() {
     }
 
     try {
-      const res = await fetch(TMDB_API.fetchMovies(pageNum, sortBy));
+      const res = await fetch(`/api/movies?page=${pageNum}&sortBy=${sortBy}`);
       if (!res.ok) {
         throw new Error("Failed to fetch");
       }

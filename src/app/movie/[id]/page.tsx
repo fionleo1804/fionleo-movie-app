@@ -1,7 +1,7 @@
-import { TMDB_API } from "@/api/tmdb";
 import Image from "next/image";
 import Link from 'next/link';
 import SafeImage from "@/components/SafeImage";
+import { TMDB_API } from "@/api/tmdb";
 import { Genre, Movie, ReleaseDateResult } from "@/types/movie";
 
 export default async function MovieDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -11,7 +11,7 @@ export default async function MovieDetail({ params }: { params: Promise<{ id: st
   const timeoutId = setTimeout(() => controller.abort(), 3000);
   
   const res = await fetch(
-      `${TMDB_API.fetchDetails(id)}&append_to_response=release_dates`, 
+      `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"}/api/movies/${id}`,
       { 
         next: { revalidate: 3600 },
         signal: controller.signal 

@@ -13,11 +13,8 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-jest.mock("@/api/tmdb", () => ({
-  TMDB_API: {
-    fetchDetails: (id: string) => `https://api.themoviedb.org/3/movie/${id}`,
-    imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-image.svg",
-  },
+jest.mock("@/utils/imageUrl", () => ({
+  imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-image.svg",
 }));
 
 const mockedFetch = jest.fn() as jest.MockedFunction<typeof window.fetch>;

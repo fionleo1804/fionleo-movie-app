@@ -1,6 +1,6 @@
 "use client";
 
-import { TMDB_API } from '@/api/tmdb';
+import { imageUrl } from '@/utils/imageUrl';
 import { Movie } from '@/types/movie';
 import Image from "next/image";
 import Link from 'next/link';
@@ -26,7 +26,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
         <div className="relative aspect-[2/3] overflow-hidden bg-gray-200">
           <SafeImage 
-            src={TMDB_API.imageUrl(movie.poster_path)}
+            src={imageUrl(movie.poster_path)}
             alt={movie.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
             fallbackSrc={'/images/placeholder/no-poster.svg'}/>

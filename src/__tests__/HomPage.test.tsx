@@ -4,6 +4,10 @@ import HomePage from "../app/page";
 import { Movie, MovieResponse } from "@/types/movie";
 import { MovieProvider } from "@/context/MovieContext";
 
+jest.mock("@/utils/imageUrl", () => ({
+  imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-poster.svg",
+}));
+
 const mockMoviesResponse: MovieResponse = {
   results: [
     {
@@ -41,13 +45,6 @@ const mockMoviesResponse: MovieResponse = {
 const mockFetchMoviesFn = jest.fn(() => 
   Promise.resolve(mockMoviesResponse)
 );
-
-jest.mock("@/api/tmdb", () => ({
-  TMDB_API: {
-    fetchMovies: (_page: number, _sortBy: string) => mockFetchMoviesFn(),
-    imageUrl: (path: string) => path ? `https://image.tmdb.org/t/p/w500${path}` : "/images/placeholder/no-poster.svg",
-  },
-}));
 
 describe("HomePage", () => {
   beforeEach(() => {
